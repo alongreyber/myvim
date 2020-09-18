@@ -12,8 +12,15 @@ set ignorecase
 " Preview changes that will be made by 
 set inccommand=nosplit
 
+" Save buffer when switching off of it
+set autowriteall
+
 " Install plugins
 call plug#begin()
+
+" [q and ]q move around in the search buffer
+nnoremap <silent> ]q :cnext <CR>
+nnoremap <silent> [q :cprevious <CR>
 
 " File Browser
 Plug 'preservim/nerdtree'
@@ -27,6 +34,8 @@ Plug 'posva/vim-vue'
 Plug 'airblade/vim-gitgutter'
 " Git integration
 Plug 'tpope/vim-fugitive'
+" JSX Highlighting for React
+Plug 'maxmellon/vim-jsx-pretty'
 
 call plug#end()
 
@@ -136,10 +145,10 @@ augroup end
 
 " Tab settings
 set ts=4 sts=4 sw=4 noexpandtab
+" Custom tab settings when editing yml and yaml files
+autocmd	Filetype yml,yaml set ts=2 sts=2 sw=2 expandtab
 
 " CoC Configuration
-" TextEdit might fail if hidden is not set.
-set hidden
 " Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup

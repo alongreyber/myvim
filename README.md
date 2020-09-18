@@ -22,6 +22,7 @@ nvim -c CocInstall coc-python
 `q:` - View cmd history (then press <enter> to run)
 `q/` - View search history (then press <enter> to run)
 `<ctrl>a` - Increment number under cursor (opposite is <ctrl>x)
+`<ctrl>g` - View current file path (useful with Ggrep search)
 
 `K` - Show documentation for object under cursor
 `gd` - Goto defintion
@@ -32,3 +33,7 @@ nvim -c CocInstall coc-python
 `af` - Select function (in visual mode)
 `ac` - Select class (in visual mode)
 `<space>o` - List all symbols in current document
+
+`:Ggrep` - Search through all files in repo that are not gitignored
+`]q` - Next match in Ggrep serach
+`[q` - Previous match in Ggrep search
