@@ -15,12 +15,12 @@ set inccommand=nosplit
 " Save buffer when switching off of it
 set autowriteall
 
-" Install plugins
-call plug#begin()
-
 " [q and ]q move around in the search buffer
 nnoremap <silent> ]q :cnext <CR>
 nnoremap <silent> [q :cprevious <CR>
+
+" Install plugins
+call plug#begin()
 
 " File Browser
 Plug 'preservim/nerdtree'
@@ -44,7 +44,7 @@ colorscheme wombat256grf
 
 " NERDTree Config
 
-" If we start nvim with no argument open nvim
+" If we start nvim with no argument open NERDTree
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " Close when opening a file
@@ -145,10 +145,33 @@ augroup end
 
 " Tab settings
 set ts=4 sts=4 sw=4 noexpandtab
+
 " Custom tab settings when editing yml and yaml files
 autocmd	Filetype yml,yaml set ts=2 sts=2 sw=2 expandtab
+" Custom tab settings when editing jsx files
+"
+autocmd	Filetype jsx,jsx_pretty,javascriptreact set ts=2 sts=2 sw=2 expandtab
+
+" Auto fix all fixable eslint issues on save
+call coc#config('eslint', {'autoFixOnSave': v:true})
+
+" Read folders with package.json as workspace folders for javascript
+autocmd FileType javascriptreact let b:coc_root_patterns = ['.eslintrc']
 
 " CoC Configuration
+"
+" extensions:
+let g:coc_global_extensions = [
+      \'coc-python',
+      \'coc-go',
+      \'coc-eslint',
+      \'coc-tsserver', 
+      \'coc-json'
+      \]
+
+" Disable/enable eslint with keys
+nnoremap <Leader>e :call coc#config('eslint', {'enable': v:false})<cr>
+nnoremap <Leader>E :call coc#config('eslint', {'enable': v:true})<cr>
 " Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup

@@ -1,6 +1,15 @@
 # Setup
 
-Install Neovim
+1. Install Neovim
+
+1. Symlink vim and CoC config from this repo:
+
+```
+ln ~/myvim/init.vim ~/.config/nvim/init.vim
+ln ~/myvim/coc-settings.json ~/.config/nvim/coc-settings.json
+```
+
+1. Install plugins and language servers for CoC:
 
 ```
 nvim -c PlugInstall
@@ -11,7 +20,7 @@ nvim -c CocInstall coc-python
 
 # My Vim Shortcuts
 
-`\f` - Toggle NERDTree
+`\f` - Toggle NERDTree  
 `\t` - Toggle terminal
 `%` - Jump to match (HTML tag or brackets)
 `ci(` - Replace inside parenthesis
@@ -24,7 +33,7 @@ nvim -c CocInstall coc-python
 `<ctrl>a` - Increment number under cursor (opposite is <ctrl>x)
 `<ctrl>g` - View current file path (useful with Ggrep search)
 
-`K` - Show documentation for object under cursor
+`K` - Show documentation for object under cursor  
 `gd` - Goto defintion
 `gi` - Goto implementation
 `\rn` - Rename symbol
@@ -34,6 +43,6 @@ nvim -c CocInstall coc-python
 `ac` - Select class (in visual mode)
 `<space>o` - List all symbols in current document
 
-`:Ggrep` - Search through all files in repo that are not gitignored
+`:Ggrep` - Search through all files in repo that are not gitignored  
 `]q` - Next match in Ggrep serach
 `[q` - Previous match in Ggrep search
