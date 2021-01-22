@@ -133,6 +133,22 @@ tnoremap <Leader>t <C-\><C-n>:call MonkeyTerminalToggle()<cr>
 " Use escape key to exit insert mode
 tnoremap <Esc> <C-\><C-n>
 
+" Add Ctrl-L in the terminal to clear it
+tnoremap <C-l> <C-\><C-n>:call ClearTerminal()<cr>
+
+let scroll_value=10000
+
+function! ClearTerminal()
+  set scrollback=1
+  let &g:scrollback=1
+  call feedkeys("\i")
+  call feedkeys("clear\<CR>")
+  call feedkeys("\<C-\>\<C-n>")
+  call feedkeys("\i")
+  sleep 100m
+  let &scrollback=g:scroll_value
+endfunction
+
 " Start insert mode and disable line numbers on terminal buffer.
 augroup terminalsettings
 	autocmd!
