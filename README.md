@@ -47,11 +47,39 @@ nvim -c CocInstall coc-python
 - `]q` - Next match in Ggrep serach
 - `[q` - Previous match in Ggrep search
 
+- `:smiley_face:` - Add an emoji (in insert mode)
+
 # Longer Commands
 
 Make a project-wide replacement:
 
 ```
 :args `git ls-files`
-:argdo %s/foo/bar/ge
+:argdo %s/foo/bar/ge | update
 ```
+
+Run a macro project-wide:
+
+```
+:args `git ls-files`
+:argdo normal @q | update
+```
+
+Build a macro manually:
+
+```
+:let @q='ggVG:s/foo/bar/ge'
+```
+
+Run a macro on a selection:
+
+```
+VG:normal @q
+```
+
+Sort and remove duplicate lines:
+
+```
+:sort u
+```
+

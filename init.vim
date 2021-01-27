@@ -324,3 +324,13 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+
+" Emoji abbreviations
+
+ab :smiley_face:  🙂
+ab :sad_face:     ☹️
+ab :check_mark:   ✅
+ab :cross_mark:   ❌
+ab :construction: 🚧
+ab :information:  ℹ️
