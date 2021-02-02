@@ -1,6 +1,6 @@
 {
 	"python.pythonPath" : "python3",
 	"python.linting.pylintEnabled" : true,
-	"coc.preferences.formatOnSaveFiletypes" : ["python"],
+	"coc.preferences.formatOnSaveFiletypes" : ["python", "json"],
 	"python.formatting.autopep8Args": ["--ignore", "E402"]
 }

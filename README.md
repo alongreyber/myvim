@@ -28,7 +28,7 @@ nvim -c CocInstall coc-python
 - `~` - Switch case of selection
 - `D` - Delete rest of line
 - `g;` - Jump to last edited location
-- `q:` - View cmd history (then press <enter> to run)
+- `q:` - View command history (then press <enter> to run)
 - `q/` - View search history (then press <enter> to run)
 - `<ctrl>a` - Increment number under cursor (opposite is <ctrl>x)
 - `<ctrl>g` - View current file path (useful with Ggrep search)
@@ -54,14 +54,17 @@ nvim -c CocInstall coc-python
 Make a project-wide replacement:
 
 ```
-:args `git ls-files`
+:argadd `git ls-files`
 :argdo %s/foo/bar/ge | update
 ```
+
+Note that there is a [known bug](https://github.com/airblade/vim-gitgutter/issues/707) when running a macro on many (50+) files with vim-gitgutter.
+To work around this issue, you can use `:GitGutterDisable` before the macro and then `:GitGutterEnable` afterwards.
 
 Run a macro project-wide:
 
 ```
-:args `git ls-files`
+:argadd `git ls-files`
 :argdo normal @q | update
 ```
 

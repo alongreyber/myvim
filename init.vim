@@ -172,7 +172,7 @@ autocmd	Filetype jsx,jsx_pretty,javascriptreact set ts=2 sts=2 sw=2 expandtab
 call coc#config('eslint', {'autoFixOnSave': v:true})
 
 " Read folders with package.json as workspace folders for javascript
-autocmd FileType javascriptreact let b:coc_root_patterns = ['.eslintrc']
+autocmd FileType javascriptreact let b:coc_root_patterns = ['eslintrc.js']
 
 " CoC Configuration
 "
