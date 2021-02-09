@@ -1,0 +1,6 @@
+title,code,description
+Make a project-wide replacement,:argadd `git ls-files`\n:argdo %s/foo/bar/ge | update,Note that there is a known bug when running a macro on many (50+) files with vim-gitgutter.\nTo work around this issue you can use `:GitGutterDisable` before the macro and then `:GitGutterEnable` afterwards.
+Run a macro project-wide,:argadd `git ls-files`\n:argdo normal @q | update,
+Build a macro manually,:let @q='ggVG:s/foo/bar/ge',
+Run a macro on a selection,VG:normal @q,
+Sort and remove duplicate lines,:sort u,

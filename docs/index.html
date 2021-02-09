@@ -17,7 +17,10 @@
 				const parts = l.split(",");
 				const ret = {};
 				parts.forEach((part, index) => {
-					ret[header[index]] = part.trim();
+					part = part.trim();
+					// Parse literal \n as a newline
+					part = part.replace("\\n", "\n");
+					ret[header[index]] = part;
 				});
 				return ret;
 			});
@@ -25,6 +28,7 @@
 
 		function App({ name }) {
 		  const [shortcuts, setShortcuts] = useState([]);
+		  const [commands, setCommands] = useState([]);
 		  const [searchTerm, setSearchTerm] = useState("");
 
 		  useEffect(async () => {
@@ -35,14 +39,30 @@
 			  setShortcuts(newShortcuts);
 		  }, []);
 
+		  useEffect(async () => {
+			  // Get commands data
+			  const response = await fetch(`${window.location.origin}/commands.csv`);
+			  const csvData = await response.text();
+			  const newCommands = csvToObjects(csvData);
+			  setCommands(newCommands);
+		  }, []);
+
 
 		  const filteredShortcuts = shortcuts.filter((shortcut) => {
 			const searchTermLC = searchTerm.toLowerCase();
 			return shortcut.description.toLowerCase().includes(searchTermLC);
 		  });
 
+		  const filteredCommands = commands.filter((command) => {
+			const searchTermLC = searchTerm.toLowerCase();
+			const searchText = command.description.toLowerCase() + " " + 
+							   command.title.toLowerCase() + " " + 
+							   command.code.toLowerCase()
+			return searchText.includes(searchTermLC);
+		  });
+
 		  return html`
-		  <div class="app">
+		  <div class="app p-8">
 			 <div class="text-3xl text-center text-blue-600 my-4 font-bold">Alon's Vim Cheat Sheet</div>
 
 			 <input 
@@ -55,6 +75,8 @@
 						outline-none rounded shadow focus:shadow-md
 						border border-gray-500" />
 
+			<div class="text-2xl font-bold my-4 ml-4">Shortcuts</div> 
+
 			 <div class="grid grid-cols-3">
 				 ${filteredShortcuts.map((shortcut) => html`
 					
@@ -66,7 +88,28 @@
 					 </div>
 				 `)}
 			 </div>
+
+			<div class="text-2xl font-bold my-4 ml-4">Commands</div> 
+
+			 <div class="grid grid-cols-3">
+				 ${filteredCommands.map((command) => html`
+					
+					 <div class="text-lg bg-blue-100 p-4 m-2">
+						<div class="text-center mb-2">
+						 ${command.title}
+						 </div>
+						 <pre class="font-mono bg-gray-200 my-4">
+							 ${command.code}
+						 </pre>
+						 <div class="">
+							 ${command.description}
+						 </div>
+					 </div>
+				 `)}
+			 </div>
+
 		  </div>
+
 		  `;
 		}
 
