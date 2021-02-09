@@ -33,7 +33,7 @@
 
 		  useEffect(async () => {
 			  // Get shortcuts data
-			  const response = await fetch(`${window.location.origin}/shortcuts.csv`);
+			  const response = await fetch(`${window.location.href}shortcuts.csv`);
 			  const csvData = await response.text();
 			  const newShortcuts = csvToObjects(csvData);
 			  setShortcuts(newShortcuts);
@@ -41,7 +41,7 @@
 
 		  useEffect(async () => {
 			  // Get commands data
-			  const response = await fetch(`${window.location.origin}/commands.csv`);
+			  const response = await fetch(`${window.location.href}commands.csv`);
 			  const csvData = await response.text();
 			  const newCommands = csvToObjects(csvData);
 			  setCommands(newCommands);
