@@ -24,3 +24,4 @@ ac           ,Select class (in visual mode)
 ]q           ,Next match in Ggrep serach
 [q           ,Previous match in Ggrep search
 :sad_face:   ,Add an emoji (in insert mode)
+\j           ,Pull data from the default register and format as json in new buffer
