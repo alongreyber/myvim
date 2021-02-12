@@ -41,6 +41,9 @@ call plug#end()
 
 " Apply color scheme
 colorscheme wombat256grf
+" Applying the color scheme to the terminal
+" leads to extra spaces which breaks things
+highlight Normal ctermbg=NONE 
 
 " NERDTree Config
 
@@ -334,3 +337,22 @@ ab :check_mark:   ✅
 ab :cross_mark:   ❌
 ab :construction: 🚧
 ab :information:  ℹ️
+
+" Pull text from default register
+" and create new formatted json register
+function NewJSONBufferFromRegister()
+	let l:new_json = @"
+	" Replace single quotes with double quotes
+	let l:new_json = substitute(l:new_json, "'", "\"", "g")
+	" Strip newlines
+	let l:new_json = substitute(l:new_json, "\n", "", "g")
+	" Format with jq
+	let l:new_json = system('jq .', l:new_json)
+
+	vnew
+	set filetype=json
+	set buftype=nofile
+	put =l:new_json
+endfunction
+
+nnoremap <Leader>j :call NewJSONBufferFromRegister()<cr>
