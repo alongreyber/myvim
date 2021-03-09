@@ -24,8 +24,10 @@ call plug#begin()
 
 " File Browser
 Plug 'preservim/nerdtree'
-" Color scheme plugin
+" Dark color scheme
 Plug 'gryf/wombat256grf'
+" Light color scheme
+Plug 'altercation/vim-colors-solarized'
 " Conquer of Completion (IDE Features)
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Vue indentation support
@@ -36,14 +38,28 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 " JSX Highlighting for React
 Plug 'maxmellon/vim-jsx-pretty'
+" Undo tree
+Plug 'mbbill/undotree'
+" Better JSON
+Plug 'elzr/vim-json'
+" Library of helpers for our custom functions
+Plug 'LucHermitte/lh-vim-lib'
 
 call plug#end()
 
 " Apply color scheme
+set background=dark
 colorscheme wombat256grf
-" Applying the color scheme to the terminal
-" leads to extra spaces which breaks things
-highlight Normal ctermbg=NONE 
+let g:solarized_termcolors=256
+
+" Command to switch to light mode
+command Light set background=light | colorscheme solarized
+command Dark  set background=dark  | colorscheme wombat256grf
+
+" Lower match parentheses timeout so Vim doesn't slow down
+" while scrolling through large files
+let g:matchparen_timeout = 20
+let g:matchparen_insert_timeout = 20
 
 " NERDTree Config
 
@@ -185,7 +201,6 @@ let g:coc_global_extensions = [
       \'coc-go',
       \'coc-eslint',
       \'coc-tsserver', 
-      \'coc-json'
       \]
 
 " Disable/enable eslint with keys
@@ -338,12 +353,10 @@ ab :cross_mark:   ❌
 ab :construction: 🚧
 ab :information:  ℹ️
 
-" Pull text from default register
-" and create new formatted json register
-function NewJSONBufferFromRegister()
-	let l:new_json = @"
-	" Replace single quotes with double quotes
-	let l:new_json = substitute(l:new_json, "'", "\"", "g")
+" Pull selected text and create new
+" formatted json register
+function NewJSONBuffer()
+	let l:new_json = lh#visual#selection()
 	" Strip newlines
 	let l:new_json = substitute(l:new_json, "\n", "", "g")
 	" Format with jq
@@ -354,5 +367,18 @@ function NewJSONBufferFromRegister()
 	set buftype=nofile
 	put =l:new_json
 endfunction
+command -range NewJSONBuffer call NewJSONBuffer()
 
-nnoremap <Leader>j :call NewJSONBufferFromRegister()<cr>
+" Unescape selected JSON
+function UnescapeJSON()
+	let l:selection = lh#visual#cut()
+	let l:unescaped = system('jq -r .', l:selection)
+	put =l:unescaped
+endfunction
+command -range UnescapeJSON call UnescapeJSON()
+
+" Undotree configuration
+let g:undotree_SetFocusWhenToggle = 1
+let g:undotree_DiffAutoOpen = 0
+" \u to toggle undotree
+nnoremap <Leader>u :UndotreeToggle<Enter>
